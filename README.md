@@ -100,3 +100,5 @@ cargo add llm_hunter
 This library is maintained as best as is reasonable. 
 
 Testing and adoption are currently in progress, as of April 6th 2026.
+
+Also see [giant-spellbook](https://github.com/jpegleg/giant-spellbook/), a CLI tool for cryptanalysis and binary analysis.
