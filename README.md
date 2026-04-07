@@ -2,7 +2,7 @@
 
 # llm_hunter
 
-This library is for researching large language model files. It is also generically useful for entropy (randomness of bytes) analysis of large files for tasks such as cryptanalysis and reverse engineering.
+This library is a mostly self contained crate for researching large language model files. The only external dependency is `chrono`. The functionality is also generically useful for entropy (randomness of bytes) analysis of large files for tasks such as cryptanalysis and reverse engineering because rather than just providing an overall entropy score, llm_hunter looks for changes in entropy while reading chunks of the file, calling out byte positions where data becomes less random or more random.
 
 Compact quick JSON analysis, don't parse the whole file:
 
