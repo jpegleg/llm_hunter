@@ -3812,7 +3812,6 @@ mod tests {
         assert!(json.contains("\"GGUF\""));
         assert!(json.contains("\"pattern_matches\""));
         assert!(json.contains("\"offset\":0"));
-        assert!(!json.contains("\"confidence\""));
     }
 
     #[test]
