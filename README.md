@@ -88,3 +88,15 @@ Here is an example output section for matching of a gguf file, using the compact
 ```
 {"ok":true,"file_name":"mistral-7b-instruct-v0.1.Q4_0.gguf","created_at_utc":"2026-04-07T02:46:27Z","byte_count":4108916384,"scanned_byte_count":524288,"is_probably_text":false,"entropy_sample":3.367063,"signatures":["magic:GGUF"],"detected_specs":[{"name":"GGUF","version":"2","source":"binary header","notes":["tensor_count=291","kv_count=20"],"pattern_matches":[{"pattern":"GGUF","offset":0,"length":4}]}],"detected_models":[{"family":"LLaMA","variant":null,"source":"GGUF text region","pattern_matches":[{"pattern":"general.architecture","offset":32,"length":20},{"pattern":"architecture","offset":40,"length":12},{"pattern":"llama","offset":64,"length":5},{"pattern":"general.name","offset":77,"length":12},{"pattern":"context_length","offset":149,"length":14}]},{"family":"Mistral","variant":"mistral 7b","source":"GGUF text region","pattern_matches":[{"pattern":"general.name","offset":77,"length":12},{"pattern":"mistral","offset":111,"length":7},{"pattern":"context_length","offset":149,"length":14},{"pattern":"embedding_length","offset":185,"length":16}]}],"matched_patterns":[{"category":"model_family_token","source":"GGUF text region","pattern_matches":[{"pattern":"phi","offset":41833,"length":3},{"pattern":"bert","offset":61157,"length":4},{"pattern":"phi","offset":112308,"length":3},{"pattern":"bert","offset":294134,"length":4},{"pattern":"bloom","offset":344071,"length":5},{"pattern":"t5","offset":508797,"length":2},{"pattern":"t5","offset":508829,"length":2}]}],"detected_data_structures":[{"name":"gguf_header","source":"binary header","offset":0,"length":24,"details":{"kv_count":"20","tensor_count":"291"},"pattern_matches":[{"pattern":"GGUF","offset":0,"length":4}]},{"name":"gguf_kv_region","source":"GGUF key/value strings","offset":32,"length":null,"details":{},"pattern_matches":[{"pattern":"general.architecture","offset":32,"length":20},{"pattern":"llama.context_length","offset":143,"length":20},{"pattern":"llama.embedding_length","offset":179,"length":22}]}],"quantization":[{"scheme":"ggml","source":"GGUF text region","pattern_matches":[{"pattern":"ggml","offset":553,"length":4},{"pattern":"ggml","offset":598,"length":4},{"pattern":"ggml","offset":461313,"length":4}]},{"scheme":"gguf","source":"GGUF text region","pattern_matches":[{"pattern":"gguf","offset":0,"length":4}]}],"dataset_size":[],"parameter_data":[],"shapes":[],"metadata":{"configured_max_safetensors_header_bytes":"16777216","configured_scan_window_bytes":"524288","gguf_kv_count":"20","gguf_tensor_count":"291","partial_scan":"true","pretty_json":"false","scan_strategy":"prefix_window"},"warnings":["safetensors header length 9769928519 exceeds configured max 16777216; skipping detailed parse"]}
 ```
+
+## Using llm_hunter
+
+The source code and license can be copied and included in another project or llm_hunter can be installed from crates.io to an existing cargo project:
+
+```
+cargo add llm_hunter
+```
+
+This library is maintained as best as is reasonable. 
+
+Testing and adoption are currently in progress, as of April 6th 2026.
