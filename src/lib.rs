@@ -14,10 +14,10 @@ const DEFAULT_SCAN_WINDOW: usize = 512 * 1024;
 const DEFAULT_DEEP_SCAN_CHUNK_BYTES: usize = 1024 * 1024;
 const DEFAULT_DEEP_SCAN_OVERLAP_BYTES: usize = 16 * 1024;
 const DEFAULT_DEEP_ENTROPY_WINDOW_BYTES: usize = 16 * 1024;
-const DEFAULT_MAX_REPORTED_ANOMALIES: usize = 128;
-const DEFAULT_MAX_REPORTED_STRUCTURE_OCCURRENCES: usize = 512;
-const DEFAULT_MAX_PATTERN_MATCHES_PER_ITEM: usize = 32;
-const DEFAULT_MAX_POSITIONS_PER_PATTERN: usize = 24;
+const DEFAULT_MAX_REPORTED_ANOMALIES: usize = 1000000;
+const DEFAULT_MAX_REPORTED_STRUCTURE_OCCURRENCES: usize = 1000000;
+const DEFAULT_MAX_PATTERN_MATCHES_PER_ITEM: usize = 1000000;
+const DEFAULT_MAX_POSITIONS_PER_PATTERN: usize = 1000000;
 const DEFAULT_CONTEXT_RADIUS: usize = 48;
 const MAX_SAFE_TENSOR_HEADER: usize = 16 * 1024 * 1024;
 const PARALLEL_THRESHOLD_BYTES: u64 = 4 * 1024 * 1024;
@@ -705,7 +705,6 @@ fn analyze_file_deep_internal(
     let total_byte_count = file.metadata()?.len();
     let chunk_size = options.deep_scan_chunk_bytes.max(4096);
     let overlap_size = options.deep_scan_overlap_bytes.min(chunk_size / 2).max(64);
-
     let mut first_chunk = vec![0u8; chunk_size];
     let first_read = file.read(&mut first_chunk)?;
     first_chunk.truncate(first_read);
@@ -3566,10 +3565,6 @@ fn analysis_to_json(a: &Analysis, pretty: bool) -> String {
     push_json_array_objects(&mut s, "shapes", &a.shapes, true, |out, item| {
         push_json_field_str(out, "kind", &item.kind, true);
         push_json_field_num(out, "offset", item.offset, true);
-        match item.length {
-            Some(v) => push_json_field_num(out, "length", v, true),
-            None => push_json_field_null(out, "length", true),
-        }
         push_json_field_str(out, "description", &item.description, true);
         push_json_field_str(out, "source", &item.source, true);
         push_metadata_json_named(
@@ -3592,8 +3587,7 @@ fn analysis_to_json(a: &Analysis, pretty: bool) -> String {
 fn push_pattern_matches_json(s: &mut String, values: &[PatternMatch], comma: bool) {
     push_json_array_objects(s, "pattern_matches", values, comma, |out, item| {
         push_json_field_str(out, "pattern", &item.pattern, true);
-        push_json_field_num(out, "offset", item.offset, true);
-        push_json_field_num(out, "length", item.length, false);
+        push_json_field_num(out, "offset", item.offset, false);
     });
 }
 
