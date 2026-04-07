@@ -1,0 +1,15 @@
+[package]
+name = "llm_hunter"
+version = "0.3.1"
+edition = "2021"
+authors = ["Keegan Bowen <carefuldata@protonmail.com>"]
+license = "MIT"
+description = "a library for forensic research of LLM gguf files and more"
+homepage = "https://carefuldata.com"
+repository = "https://github.com/jpegleg/llm_hunter"
+readme = "README.md"
+categories = ["parsing"]
+keywords = ["binary-analysis", "llm", "gguf", "llm-forensics", "forensic-analysis"]
+
+[dependencies]
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
