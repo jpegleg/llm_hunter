@@ -24,6 +24,13 @@ let json = llm_hunter::analyze_file_json_deep_pretty("mistral-7b-instruct-v0.1.Q
 The JSON output includes pattern matching byte offsets, and notes about offsets for a number of potentially interesting aspects.
 The analysis is based on conditional matching of byte sequences commonly found in model files.
 
+
+
+Up to 1 million patterns per item can be reported by default. Giant sized unknown files are safely chunked and streamed so your computer doesn't run out of RAM
+and the whole file is read through via "deep" mode `analyze_file_json_deep` and `analyze_file_json_deep_pretty`. The regular mode also prevents running out of RAM
+and runs faster because it only reads part of the start of the file, unless the file is smaller than the sample size, which would result in the whole file being
+read in default quick mode.
+
 Here is an example where the target file is _not_ an LLM file, but a linux ELF file for the program `cmake`. Notice the false positives
 for "model_family_token". This is a common category of false positive because some of the patterns are small so they com up more frequently
 in "random" data. If you are unsure, view the data around that byte position (offset) and find out.
