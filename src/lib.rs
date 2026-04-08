@@ -21,7 +21,6 @@ const DEFAULT_MAX_POSITIONS_PER_PATTERN: usize = 1000000;
 const DEFAULT_CONTEXT_RADIUS: usize = 48;
 const MAX_SAFE_TENSOR_HEADER: usize = 16 * 1024 * 1024;
 const PARALLEL_THRESHOLD_BYTES: u64 = 4 * 1024 * 1024;
-const HIGH_ENTROPY_THRESHOLD: f64 = 7.85;
 const LOW_ENTROPY_THRESHOLD: f64 = 0.20;
 const ENTROPY_TRANSITION_DELTA: f64 = 2.25;
 const ZERO_RUN_ANOMALY_THRESHOLD: u64 = 4096;
@@ -2552,23 +2551,7 @@ fn scan_entropy_windows(
         let slice = &chunk[start..end];
         let entropy = estimate_entropy_sample(slice, slice.len());
 
-        if entropy >= HIGH_ENTROPY_THRESHOLD {
-            let mut details = BTreeMap::new();
-            details.insert("entropy".into(), format!("{:.6}", entropy));
-            push_limited_shaper(
-                analysis,
-                EntroshapeHint {
-                    kind: "high_entropy_region".into(),
-                    offset: chunk_offset + start as u64,
-                    length: Some(slice.len() as u64),
-                    description: format!("entropy {:.3} exceeded high-entropy threshold", entropy),
-                    source: "deep entropy scan".into(),
-                    details,
-                    pattern_matches: Vec::new(),
-                },
-                options,
-            );
-        } else if entropy <= LOW_ENTROPY_THRESHOLD {
+        if entropy <= LOW_ENTROPY_THRESHOLD {
             let mut details = BTreeMap::new();
             details.insert("entropy".into(), format!("{:.6}", entropy));
             push_limited_shaper(
@@ -3874,3 +3857,4 @@ mod tests {
         assert!(!json.contains("\"pattern_matches\":[]"));
     }
 }
+
