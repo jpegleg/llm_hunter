@@ -22,9 +22,8 @@ let json = llm_hunter::analyze_file_json_deep_pretty("mistral-7b-instruct-v0.1.Q
 ```
 
 The JSON output includes pattern matching byte offsets, and notes about offsets for a number of potentially interesting aspects.
-The analysis is based on conditional matching of byte sequences commonly found in model files.
-
-
+The analysis is based on conditional matching of byte sequences commonly found in GGUF model files and scientific data formats (HDF5) files.
+There is detection for ZIP segments, including attempts at matching Python Pickle and PyTorch segments.
 
 Up to 1 million patterns per item can be reported by default. Giant sized unknown files are safely chunked and streamed so your computer doesn't run out of RAM
 and the whole file is read through via "deep" mode `analyze_file_json_deep` and `analyze_file_json_deep_pretty`. The regular mode also prevents running out of RAM
