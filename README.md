@@ -167,3 +167,12 @@ This library is maintained as best as is reasonable.
 Testing and adoption are currently in progress, as of April 6th 2026.
 
 Also see [giant-spellbook](https://github.com/jpegleg/giant-spellbook/), a CLI tool for cryptanalysis and binary analysis.
+
+
+## Changelog
+
+0.3.1 - public release
+
+0.3.2 - remove "length" in pattern sections to reduce JSON size since length isn't needed because the pattern is included in the JSON, also raise the max matches per item to 1 million
+
+0.3.3 - remove "high entropy" events to shrink JSON size
