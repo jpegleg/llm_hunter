@@ -145,7 +145,7 @@ in "random" data. If you are unsure, view the data around that byte position (of
 }
 ```
 
-<b>Warning</b> large files can take a long time to process. There is some threading to speed up tasks, but large files can still take multiple minutes to process and create large JSON outputs.
+<b>Warning</b> "deep" mode with large files can take a long time to process. There is some threading to speed up tasks, but large files can still take multiple minutes to process and create large JSON outputs. The default quick mode doesn't read the whole file if the file is big, so it remains quick with enormous model files by only reading a sample from the start of the file.
 
 
 Here is an example output section for matching of a gguf file, using the compact JSON mode and quick scan mode:
