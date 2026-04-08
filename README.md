@@ -31,7 +31,7 @@ and runs faster because it only reads part of the start of the file, unless the 
 read in default quick mode.
 
 Here is an example where the target file is _not_ an LLM file, but a linux ELF file for the program `cmake`. Notice the false positives
-for "model_family_token". This is a common category of false positive because some of the patterns are small so they com up more frequently
+for "model_family_token". This is a common category of false positive because some of the patterns are small so they come up more frequently
 in "random" data. If you are unsure, view the data around that byte position (offset) and find out.
 
 ```
