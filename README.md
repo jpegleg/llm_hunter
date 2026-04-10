@@ -21,6 +21,9 @@ Use "deep" mode to read the entire file:
 let json = llm_hunter::analyze_file_json_deep_pretty("mistral-7b-instruct-v0.1.Q4_0.gguf");
 ```
 
+There is also "options" to adjust sample windows, see more at [docs.rs](https://docs.rs/llm_hunter/latest/llm_hunter/struct.AnalysisOptions.html). The features are subject to change
+and are under active development.
+
 The JSON output includes pattern matching byte offsets, and notes about offsets for a number of potentially interesting aspects.
 The analysis is based on conditional matching of byte sequences commonly found in GGUF model files and scientific data formats (HDF5) files.
 There is detection for ZIP segments, including attempts at matching Python Pickle and PyTorch segments.
@@ -28,7 +31,7 @@ There is detection for ZIP segments, including attempts at matching Python Pickl
 Up to 1 million patterns per item can be reported by default. Giant sized unknown files are safely chunked and streamed so your computer doesn't run out of RAM
 and the whole file is read through via "deep" mode `analyze_file_json_deep` and `analyze_file_json_deep_pretty`. The regular mode also prevents running out of RAM
 and runs faster because it only reads part of the start of the file, unless the file is smaller than the sample size, which would result in the whole file being
-read in default quick mode.
+read in quick mode.
 
 Here is an example where the target file is _not_ an LLM file, but a linux ELF file for the program `cmake`. Notice the false positives
 for "model_family_token". This is a common category of false positive because some of the patterns are small so they come up more frequently
@@ -176,3 +179,5 @@ Also see [giant-spellbook](https://github.com/jpegleg/giant-spellbook/), a CLI t
 0.3.2 - remove "length" in pattern sections to reduce JSON size since length isn't needed because the pattern is included in the JSON, also raise the max matches per item to 1 million
 
 0.3.3 - remove "high entropy" events to shrink JSON size
+
+0.3.4 - changed name of report timestamp to "report_created_utc"
