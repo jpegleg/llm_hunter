@@ -157,7 +157,7 @@ pub struct PatternMatch {
 pub struct Analysis {
     pub ok: bool,
     pub file_name: String,
-    pub created_at_utc: String,
+    pub report_created_utc: String,
     pub byte_count: u64,
     pub scanned_byte_count: u64,
     pub is_probably_text: bool,
@@ -633,7 +633,7 @@ fn analyze_prefix_bytes_internal(
     let mut analysis = Analysis {
         ok: true,
         file_name: file_name.to_string(),
-        created_at_utc: now_utc_iso(),
+        report_created_utc: now_utc_iso(),
         byte_count: total_byte_count,
         scanned_byte_count: scan_bytes.len() as u64,
         is_probably_text: ctx.is_probably_text,
@@ -711,7 +711,7 @@ fn analyze_file_deep_internal(
     let mut analysis = Analysis {
         ok: true,
         file_name: file_name.clone(),
-        created_at_utc: now_utc_iso(),
+        report_created_utc: now_utc_iso(),
         byte_count: total_byte_count,
         scanned_byte_count: total_byte_count,
         is_probably_text: is_probably_text(&first_chunk),
@@ -798,7 +798,7 @@ fn analyze_deep_buffer_internal(
     let mut analysis = Analysis {
         ok: true,
         file_name: file_name.to_string(),
-        created_at_utc: now_utc_iso(),
+        report_created_utc: now_utc_iso(),
         byte_count: bytes.len() as u64,
         scanned_byte_count: bytes.len() as u64,
         is_probably_text: is_probably_text(sample),
@@ -3377,7 +3377,7 @@ fn error_to_json(kind: &str, message: &str, file_name: &str, pretty: bool) -> St
     s.push('{');
     push_json_field_bool(&mut s, "ok", false, true);
     push_json_field_str(&mut s, "file_name", file_name, true);
-    push_json_field_str(&mut s, "created_at_utc", &timestamp, true);
+    push_json_field_str(&mut s, "report_created_utc", &timestamp, true);
     s.push_str("\"error\":{");
     push_json_field_str(&mut s, "kind", kind, true);
     push_json_field_str(&mut s, "message", message, false);
@@ -3390,7 +3390,7 @@ fn analysis_to_json(a: &Analysis, pretty: bool) -> String {
     s.push('{');
     push_json_field_bool(&mut s, "ok", a.ok, true);
     push_json_field_str(&mut s, "file_name", &a.file_name, true);
-    push_json_field_str(&mut s, "created_at_utc", &a.created_at_utc, true);
+    push_json_field_str(&mut s, "report_created_utc", &a.report_created_utc, true);
     push_json_field_num(&mut s, "byte_count", a.byte_count, true);
     push_json_field_num(&mut s, "scanned_byte_count", a.scanned_byte_count, true);
     push_json_field_bool(&mut s, "is_probably_text", a.is_probably_text, true);
