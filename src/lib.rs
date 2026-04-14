@@ -1199,7 +1199,9 @@ fn detect_safetensors(
 
     let end = end_u64 as usize;
     let header = &scan_bytes[8..end];
-    if !(header.starts_with(b"{") && header.ends_with(b"}")) {
+    let last_meaningful = header.iter().rev()
+       .find(|&&b| b != b' ' && b != b'\t' && b != b'\r' && b != b'\n' && b != 0);
+    if !(header.starts_with(b"{") && last_meaningful == Some(&b'}')) {
         return out;
     }
 
@@ -2418,9 +2420,10 @@ fn stream_safetensors_header_keywords(
         stream.saw_open_brace = slice.first() == Some(&b'{');
     }
     if chunk_offset + local_end as u64 == header_end {
-        stream.saw_close_brace = slice.last() == Some(&b'}');
+        stream.saw_close_brace = slice.iter().rev()
+            .find(|&&b| b != b' ' && b != b'\t' && b != b'\r' && b != b'\n' && b != 0)
+            == Some(&b'}');
     }
-
     let lower = ascii_lower_vec(slice);
     let mut combined = Vec::with_capacity(stream.keyword_tail.len() + lower.len());
     combined.extend_from_slice(&stream.keyword_tail);
