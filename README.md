@@ -181,3 +181,5 @@ Also see [giant-spellbook](https://github.com/jpegleg/giant-spellbook/), a CLI t
 0.3.3 - remove "high entropy" events to shrink JSON size
 
 0.3.4 - changed name of report timestamp to "report_created_utc"
+
+0.3.5 - improve safetensor parser handling of JSON termination variations
